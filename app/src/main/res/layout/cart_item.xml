@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="cartItem"
+            type="com.example.groceryapp.model.CartItem" />
+
+        <variable
+            name="groceryInterface"
+            type="com.example.groceryapp.adapters.ProductListAdapter.ProductInterface" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/product_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:productImage="@{cartItem.product.imageUrls}"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:id="@+id/text_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/img_product"
+                android:layout_toRightOf="@id/img_product">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/text_ProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginVertical="10dp"
+                    android:layout_toStartOf="@id/prodDelete"
+                    android:layout_toLeftOf="@id/prodDelete"
+                    android:gravity="left"
+                    android:text="@{cartItem.product.name}"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/prodDelete"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_delete" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/text_ProdFinalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(cartItem.product.final_price) + '$'}"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_ProdActualPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/text_ProdFinalPrice"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(cartItem.product.actual_price) + '$'}"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/text_ProdFinalPrice" />
+
+                <TextView
+                    android:id="@+id/text_Discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/discount_back"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@{String.valueOf(cartItem.product.discount)}"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|end">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/prodQtyLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="100">
+
+                            <TextView
+                                android:id="@+id/prodQtyMinus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_btn_bg"
+                                android:layout_weight="25"
+                                android:gravity="center"
+                                android:textColor="@color/primarycolor"
+                                android:text="-" />
+
+                            <TextView
+                                android:id="@+id/prodQty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="50"
+                                android:gravity="center"
+                                android:text="@{String.valueOf(cartItem.product.qty)}" />
+
+                            <TextView
+                                android:id="@+id/prodQtyPlus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="25"
+                                android:background="@drawable/colored_btn_bg"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:text="+" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>
