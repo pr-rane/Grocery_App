@@ -1,7 +1,5 @@
 package com.example.groceryapp.adapters;
 
-import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -15,7 +13,6 @@ import java.util.List;
 public class CategoriesFragmentAdapter extends FragmentPagerAdapter {
 
     private List<Category> categoriesTab = new ArrayList<>();
-    private Bundle bundle;
     private ProductsFragment fragment;
 
 
@@ -31,9 +28,6 @@ public class CategoriesFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         fragment = new ProductsFragment(categoriesTab.get(position));
-//        bundle = new Bundle();
-//        bundle.putInt("position", position);
-//        fragment.setArguments(bundle);
         return fragment;
     }
 

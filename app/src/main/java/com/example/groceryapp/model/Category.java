@@ -41,7 +41,4 @@ public class Category {
         this.products.clear();
     }
 
-
-
-
 }

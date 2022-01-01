@@ -17,11 +17,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Holder> {
 
 
     List<CartItem> cartItems = new ArrayList<>();
-//    Context mContext;
     private  CartInterface cartInterface;
 
     public CartAdapter(CartInterface cartInterface) {
-//        super(Product.itemCallback);
         this.cartInterface = cartInterface;
     }
 
@@ -30,23 +28,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Holder> {
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         CartItemBinding itemBinding = CartItemBinding.inflate(inflater,parent,false);
+
         return new Holder(itemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull  Holder holder, int position) {
         CartItem product = cartItems.get(position);
+        holder.binding.setItemPosition(position);
         holder.binding.setCartItem(product);
+        holder.binding.setCartInterface(cartInterface);
 
-//        holder.productName.setText(products.get(position).getName());
-//        holder.prodActPrice.setText(""+products.get(position).getActual_price());
-//        holder.prodActPrice.setPaintFlags(holder.prodActPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        holder.prodFinalPrice.setText(""+products.get(position).getFinal_price());
-//        holder.prodDiscount.setText(products.get(position).getDiscount()+" % OFF");
-//
-//
         if(cartItems.get(position).getProduct().getQty()==0){
             cartInterface.deleteItem(cartItems.get(position));
         }
@@ -62,41 +55,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Holder> {
             holder.binding.textProdActualPrice.setVisibility(View.VISIBLE);
             holder.binding.textDiscount.setVisibility(View.VISIBLE);
         }
-
-        holder.binding.prodDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cartInterface.deleteItem(cartItems.get(position));
-            }
-        });
-
-        holder.binding.prodQtyMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cartItems.get(position).getProduct().getQty()==1){
-//                    holder.binding.prodQtyLayout.setVisibility(View.GONE);
-                    cartItems.get(position).getProduct().setQty(0);
-                    cartInterface.deleteItem(cartItems.get(position));
-                }
-                else {
-                    int quantity = cartItems.get(position).getProduct().getQty();
-                    if (quantity>=1)
-                        quantity--;
-                    cartItems.get(position).getProduct().setQty(quantity);
-                    holder.binding.prodQty.setText(""+quantity);
-                }
-            }
-        });
-
-        holder.binding.prodQtyPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = cartItems.get(position).getProduct().getQty();
-                quantity++;
-                cartItems.get(position).getProduct().setQty(quantity);
-                holder.binding.prodQty.setText(""+quantity);
-            }
-        });
 
     }
     public void submitList(List<CartItem> Items){
@@ -123,6 +81,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Holder> {
 
     public interface CartInterface{
         void deleteItem(CartItem cartItem);
+        void addItem(CartItem cartItem,int itemPosition);
+        void removeItem(CartItem cartItem,int itemPosition);
     }
 
 }

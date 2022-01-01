@@ -18,7 +18,6 @@ public class ProductListAdapter extends ListAdapter<Product,ProductListAdapter.H
 
 
     List<Product> products = new ArrayList<>();
-//    Context mContext;
 
     ProductInterface productInterface;
     public ProductListAdapter(ProductInterface productInterface) {
@@ -32,21 +31,17 @@ public class ProductListAdapter extends ListAdapter<Product,ProductListAdapter.H
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ProductItemBinding itemBinding = ProductItemBinding.inflate(inflater,parent,false);
-        itemBinding.setGroceryInterface(productInterface);
+
         return new Holder(itemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull  Holder holder, int position) {
         Product product = products.get(position);
+        holder.binding.setItemPosition(position);
         holder.binding.setProduct(product);
-//        holder.productName.setText(products.get(position).getName());
-//        holder.prodActPrice.setText(""+products.get(position).getActual_price());
-//        holder.prodActPrice.setPaintFlags(holder.prodActPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        holder.prodFinalPrice.setText(""+products.get(position).getFinal_price());
-//        holder.prodDiscount.setText(products.get(position).getDiscount()+" % OFF");
-//
-//
+        holder.binding.setGroceryInterface(productInterface);
+
         if(product.getQty()==0){
             holder.binding.prodQtyInitial.setVisibility(View.VISIBLE);
             holder.binding.prodQtyLayout.setVisibility(View.GONE);
@@ -70,41 +65,10 @@ public class ProductListAdapter extends ListAdapter<Product,ProductListAdapter.H
             public void onClick(View v) {
                 holder.binding.prodQtyInitial.setVisibility(View.GONE);
                 holder.binding.prodQtyLayout.setVisibility(View.VISIBLE);
-                product.setQty(1);
-//                holder.binding.prodQty.setText("1");
-                productInterface.addItem(product);
+                productInterface.addItem(product,position);
             }
         });
 
-        holder.binding.prodQtyMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(product.getQty()==1){
-                    holder.binding.prodQtyLayout.setVisibility(View.GONE);
-                    holder.binding.prodQtyInitial.setVisibility(View.VISIBLE);
-                    product.setQty(0);
-                    productInterface.removeItem(product);
-                }
-                else {
-                    int quantity = product.getQty();
-                    if (quantity>=1)
-                        quantity--;
-                    product.setQty(quantity);
-                    holder.binding.prodQty.setText(""+quantity);
-                }
-            }
-        });
-
-        holder.binding.prodQtyPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = product.getQty();
-                quantity++;
-                product.setQty(quantity);
-//                holder.binding.prodQty.setText(""+quantity);
-                productInterface.addItem(product);
-            }
-        });
 
     }
     public void submitList(List<Product> productList){
@@ -131,8 +95,8 @@ public class ProductListAdapter extends ListAdapter<Product,ProductListAdapter.H
 
 
     public interface ProductInterface{
-        void addItem(Product product);
-        void removeItem(Product product);
+        void addItem(Product product,int itemPosition);
+        void removeItem(Product product,int itemPosition);
     }
 
 }

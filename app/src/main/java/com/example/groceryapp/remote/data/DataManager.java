@@ -10,7 +10,6 @@ import com.example.groceryapp.remote.VolleySingleton;
 import org.json.JSONObject;
 
 public class DataManager {
-    private Context context;
 
     public DataManager() {
     }

@@ -98,6 +98,39 @@ public class groceryRepo {
         });
     }
 
+    public void addProductQty(Product product) {
+        if(mutableLiveData.getValue()==null)
+            return;
+
+        List<Category> categoryList = new ArrayList<>(mutableLiveData.getValue());
+        for(Category category:categoryList){
+            for (Product item:category.getAllProducts()){
+                if(product.equals(item)){
+                    item.setQty(item.getQty()+1);
+                }
+            }
+        }
+        mutableLiveData.setValue(categoryList);
+    }
+
+    public void removeProductQty(Product product) {
+        if(mutableLiveData.getValue()==null)
+            return;
+
+        List<Category> categoryList = new ArrayList<>(mutableLiveData.getValue());
+        for(Category category:categoryList){
+            for (Product item:category.getAllProducts()){
+                if(product.equals(item)){
+                    if(item.getQty()>0){
+                        item.setQty(item.getQty()-1);
+                    }
+                    break;
+                }
+            }
+        }
+        mutableLiveData.setValue(categoryList);
+    }
+
     public void deleteProductQty(Product product) {
         if(mutableLiveData.getValue()==null)
             return;

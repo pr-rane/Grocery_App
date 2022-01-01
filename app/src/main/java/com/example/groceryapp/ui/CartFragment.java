@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.example.groceryapp.adapters.CartAdapter;
 import com.example.groceryapp.databinding.FragmentCartBinding;
 import com.example.groceryapp.model.CartItem;
+import com.example.groceryapp.model.Product;
 import com.example.groceryapp.viewmodel.groceryViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +28,8 @@ import java.util.List;
 public class CartFragment extends Fragment implements CartAdapter.CartInterface {
 
     groceryViewModel groceryViewModel;
+    private CartAdapter cartAdapter;
+
     public CartFragment() {
         // Required empty public constructor
     }
@@ -42,7 +47,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartInterface 
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CartAdapter cartAdapter = new CartAdapter(this);
+        cartAdapter = new CartAdapter(this);
         cartBinding.cartRecycler.setAdapter(cartAdapter);
         cartBinding.cartRecycler.addItemDecoration(new DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL));
 
@@ -60,6 +65,27 @@ public class CartFragment extends Fragment implements CartAdapter.CartInterface 
 
     @Override
     public void deleteItem(CartItem cartItem) {
-        groceryViewModel.removeItemFromCart(cartItem);
+        if(groceryViewModel.deleteProductFromCart(cartItem.getProduct())){
+            Toast.makeText(requireContext(), "deleteItem", Toast.LENGTH_SHORT).show();
+            cartAdapter.notifyDataSetChanged();
+        }
+
     }
+
+    @Override
+    public void addItem(CartItem cartItem,int itemPosition) {
+        if(groceryViewModel.addProductToCart(cartItem.getProduct())){
+            Toast.makeText(requireContext(), "addItem", Toast.LENGTH_SHORT).show();
+            cartAdapter.notifyItemChanged(itemPosition);
+        }
+    }
+
+    @Override
+    public void removeItem(CartItem cartItem,int itemPosition) {
+        if(groceryViewModel.removeItemFromCart(cartItem.getProduct())){
+            Toast.makeText(requireContext(), "removeItem", Toast.LENGTH_SHORT).show();
+            cartAdapter.notifyItemChanged(itemPosition);
+        }
+    }
+
 }

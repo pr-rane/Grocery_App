@@ -6,12 +6,15 @@
 
     <data>
         <variable
+            name="itemPosition"
+            type="int" />
+        <variable
             name="cartItem"
             type="com.example.groceryapp.model.CartItem" />
 
         <variable
-            name="groceryInterface"
-            type="com.example.groceryapp.adapters.ProductListAdapter.ProductInterface" />
+            name="cartInterface"
+            type="com.example.groceryapp.adapters.CartAdapter.CartInterface" />
 
     </data>
 
@@ -61,8 +64,9 @@
                     android:id="@+id/prodDelete"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:onClick="@{()->cartInterface.deleteItem(cartItem)}"
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_delete" />
                 </RelativeLayout>
@@ -127,6 +131,7 @@
                                 android:background="@drawable/border_btn_bg"
                                 android:layout_weight="25"
                                 android:gravity="center"
+                                android:onClick="@{()->cartInterface.removeItem(cartItem,itemPosition)}"
                                 android:textColor="@color/primarycolor"
                                 android:text="-" />
 
@@ -145,6 +150,7 @@
                                 android:layout_weight="25"
                                 android:background="@drawable/colored_btn_bg"
                                 android:gravity="center"
+                                android:onClick="@{()->cartInterface.addItem(cartItem,itemPosition)}"
                                 android:textColor="@color/white"
                                 android:text="+" />
                         </LinearLayout>

@@ -33,23 +33,35 @@ public class groceryViewModel extends ViewModel {
 
 
     public boolean addProductToCart(Product product){
+        addToProductList(product);
         return cartRepo.addItemToCart(product);
     }
 
+    public void addToProductList(Product product){
+        groceryRepo.addProductQty(product);
+    }
     public void FillPreviousCart(){
-        if(categoryList.getValue()!=null&&categoryList.getValue().size()>0){
+        if(categoryList!=null&&categoryList.getValue().size()>0){
             cartRepo.FillPreviousCart(categoryList);
         }
     }
 
-    public boolean removeItemFromCart(CartItem cartItem){
-        deleteFromProductList(cartItem);
-        return cartRepo.removeItemFromCart(cartItem);
+    public boolean deleteProductFromCart(Product product){
+        deleteFromCart(product);
+        return cartRepo.deleteProductFromCart(product);
     }
 
-    public void deleteFromProductList(CartItem cartItem){
-        Product product = cartItem.getProduct();
+    private void deleteFromCart(Product product) {
         groceryRepo.deleteProductQty(product);
+    }
+
+    public boolean removeItemFromCart(Product product){
+        removeFromProductList(product);
+        return cartRepo.removeItemFromCart(product);
+    }
+
+    public void removeFromProductList(Product product){
+        groceryRepo.removeProductQty(product);
     }
 
 

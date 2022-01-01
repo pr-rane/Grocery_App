@@ -62,18 +62,18 @@ public class ProductsFragment extends Fragment implements ProductListAdapter.Pro
     }
 
     @Override
-    public void addItem(Product product) {
+    public void addItem(Product product,int itemPosition) {
         if(HomeFragment.groceryViewModel.addProductToCart(product)){
             Toast.makeText(requireContext(), "isadded", Toast.LENGTH_SHORT).show();
-            productListAdapter.notifyDataSetChanged();
+            productListAdapter.notifyItemChanged(itemPosition);
         }
     }
 
     @Override
-    public void removeItem(Product product) {
-        CartItem cartItem = new CartItem(product,0);
-        if(HomeFragment.groceryViewModel.removeItemFromCart(cartItem)){
+    public void removeItem(Product product,int itemPosition) {
+        if(HomeFragment.groceryViewModel.removeItemFromCart(product)){
             Toast.makeText(requireContext(), "isremove", Toast.LENGTH_SHORT).show();
+            productListAdapter.notifyItemChanged(itemPosition);
         }
     }
 }

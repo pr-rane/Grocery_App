@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment {
         homeBinding.tabLayout.setupWithViewPager(homeBinding.viewPager);
 
         groceryViewModel = new ViewModelProvider(requireActivity()).get(groceryViewModel.class);
+        groceryViewModel = new ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(groceryViewModel.class);
         groceryViewModel.getCategories(requireContext()).observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {

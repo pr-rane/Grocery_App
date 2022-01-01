@@ -1,15 +1,11 @@
 package com.example.groceryapp.model;
 
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-
 import com.bumptech.glide.Glide;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class Product {

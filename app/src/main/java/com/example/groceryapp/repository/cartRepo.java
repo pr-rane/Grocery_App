@@ -20,7 +20,6 @@ public class cartRepo {
         if(mutableCart.getValue()== null){
             initCart();
         }
-
         return mutableCart;
     }
 
@@ -37,7 +36,7 @@ public class cartRepo {
         for (CartItem cartItem:cartItemList){
             if(cartItem.getProduct().getId()==product.getId()){
                 int index = cartItemList.indexOf(cartItem);
-                cartItem.setQuantity(cartItem.getQuantity()+1);
+                cartItem.setQuantity(product.getQty());
                 cartItemList.set(index,cartItem);
                 mutableCart.setValue(cartItemList);
                 return true;
@@ -82,14 +81,42 @@ public class cartRepo {
 
     }
 
-    public boolean removeItemFromCart(CartItem cartItem) {
+    public boolean removeItemFromCart(Product product) {
         if(mutableCart.getValue()==null)
             return true;
 
         List<CartItem> cartItemList = new ArrayList<>(mutableCart.getValue());
-        cartItem.getProduct().setQty(0);
-        cartItemList.remove(cartItem);
-        mutableCart.setValue(cartItemList);
+
+        for (CartItem cartItem:cartItemList){
+            if(cartItem.getProduct().getId()==product.getId()){
+                int index = cartItemList.indexOf(cartItem);
+                if(cartItem.getQuantity()>1){
+                    cartItem.setQuantity(product.getQty());
+                    cartItemList.set(index,cartItem);
+                }
+                else {
+                    cartItemList.remove(cartItem);
+                }
+                mutableCart.setValue(cartItemList);
+                return true;
+            }
+        }
+        return true;
+    }
+
+    public boolean deleteProductFromCart(Product product) {
+        if(mutableCart.getValue()==null)
+            return true;
+
+        List<CartItem> cartItemList = new ArrayList<>(mutableCart.getValue());
+
+        for (CartItem cartItem:cartItemList){
+            if(cartItem.getProduct().getId()==product.getId()){
+                cartItemList.remove(cartItem);
+                mutableCart.setValue(cartItemList);
+                return true;
+            }
+        }
         return true;
     }
 }
