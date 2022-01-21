@@ -18,6 +18,7 @@ public class Product {
     private double actual_price;
     private double discount;
     private int qty;
+    private boolean available;
     private String variant;
     private ArrayList<String> imageUrls;
 
@@ -152,4 +153,11 @@ public class Product {
                 .into(imageView);
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 }

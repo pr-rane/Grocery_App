@@ -20,9 +20,9 @@ public class groceryViewModel extends ViewModel {
 
     LiveData<List<Category>> categoryList;
     LiveData<List<CartItem>> cartList;
-    public LiveData<List<Category>> getCategories(Context context){
+    public LiveData<List<Category>> getCategories(){
         if(categoryList==null)
-        categoryList = groceryRepo.getCategories(context);
+        categoryList = groceryRepo.getCategories();
         return categoryList;
     }
 

@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         groceryViewModel = new ViewModelProvider(requireActivity()).get(groceryViewModel.class);
         groceryViewModel = new ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(groceryViewModel.class);
-        groceryViewModel.getCategories(requireContext()).observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
+        groceryViewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
                 categoriesAdapter.submitList(categories);

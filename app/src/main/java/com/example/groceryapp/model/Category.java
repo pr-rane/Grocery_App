@@ -37,6 +37,10 @@ public class Category {
         return products;
     }
 
+    public void setAllProducts(ArrayList<Product> allProducts){
+         products= allProducts;
+    }
+
     public void clearAllProduct(){
         this.products.clear();
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.groceryapp.MyApplication;
 import com.example.groceryapp.remote.VolleySingleton;
 
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class DataManager {
     public DataManager() {
     }
 
-    public void sendVolleyRequest(Context context,final DataValues dataValues) {
+    public void sendVolleyRequest(final DataValues dataValues) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(APICALL.baseUrl, new JSONObject(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -30,7 +31,7 @@ public class DataManager {
                 }
         );
 
-        VolleySingleton.getInstance(context).addToQueue(jsonObjectRequest);
+        VolleySingleton.getInstance(MyApplication.getAppContext()).addToQueue(jsonObjectRequest);
 
     }
 

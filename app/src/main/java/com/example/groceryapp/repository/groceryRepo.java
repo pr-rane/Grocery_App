@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.VolleyError;
+import com.example.groceryapp.MyApplication;
 import com.example.groceryapp.model.Category;
 import com.example.groceryapp.model.Product;
 import com.example.groceryapp.remote.data.DataManager;
@@ -25,18 +26,18 @@ public class groceryRepo {
     private MutableLiveData<List<Category>> mutableLiveData;
     private DataManager dataManager;
 
-    public LiveData<List<Category>> getCategories(Context context){
+    public LiveData<List<Category>> getCategories(){
         if(mutableLiveData == null){
             mutableLiveData = new MutableLiveData<>();
-            loadCategories(context);
+            loadCategories();
         }
         return mutableLiveData;
     }
 
-    private void loadCategories(Context context){
+    private void loadCategories(){
         List<Category> categoryList = new ArrayList<>();
         dataManager = new DataManager();
-        dataManager.sendVolleyRequest(context, new DataValues() {
+        dataManager.sendVolleyRequest(new DataValues() {
             @Override
             public void setJsonResponse(JSONObject response) {
 
@@ -93,7 +94,7 @@ public class groceryRepo {
             @Override
             public void setJsonError(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getAppContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
